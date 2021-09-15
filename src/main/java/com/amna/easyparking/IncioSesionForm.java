@@ -5,11 +5,16 @@
  */
 package com.amna.easyparking;
 
+import com.amna.easyparking.vo.UsuarioVO;
+import java.util.Optional;
+
 /**
  *
  * @author Elsa Mellissa
  */
 public class IncioSesionForm extends javax.swing.JFrame {
+
+    private Modelo modelo = new Modelo();
 
     /**
      * Creates new form IncioSesionForm
@@ -112,10 +117,36 @@ public class IncioSesionForm extends javax.swing.JFrame {
 
     private void txtCuentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCuentaActionPerformed
         // TODO add your handling code here:
+
     }//GEN-LAST:event_txtCuentaActionPerformed
 
     private void btnIniciarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIniciarSesionActionPerformed
-        // TODO add your handling code here:
+        // Validar que el usuario halla escrito la cuenta y la contraseña
+        // Consultar el usuario en la BD con la cuenta 
+        // Comparar que la cuenta y contraseña coincidan con la BD
+
+        Optional<UsuarioVO> optUsuario = modelo.consultarUsuario(txtCuenta.getText());
+        if (optUsuario.isEmpty()) {
+            //Usuario o contraseña no validos
+            System.out.println("Usuario no existe");
+            return;
+
+        }
+        if (!optUsuario.get().getContrasena().equals(txtContrasena.getText())) {
+            //Usuario o contraseña no validos
+            System.out.println("Contraseña no valida");
+            return;
+        }
+
+        if (optUsuario.get().getTipo().equalsIgnoreCase("ADMINISTRADOR")) {
+            //Abrir ambiente de adminstrador
+            System.out.println("Abriendo ambiente del administrador");
+
+        } else {
+            //Abrir ambiente de Vigilante
+            System.out.println("Abriendo ambiente del vigilante");
+        }
+
     }//GEN-LAST:event_btnIniciarSesionActionPerformed
 
     private void txtContrasenaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtContrasenaActionPerformed
