@@ -139,7 +139,7 @@ public class IncioSesionForm extends javax.swing.JFrame {
         }
 
         if (optUsuario.get().getTipo().equalsIgnoreCase("ADMINISTRADOR")) {
-            //Abrir ambiente de adminstrador
+            //Abrir ambiente de administrador
             System.out.println("Abriendo ambiente del administrador");
 
         } else {
