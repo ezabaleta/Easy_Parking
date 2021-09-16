@@ -40,6 +40,7 @@ public class FrmAmbienteVigilante extends javax.swing.JFrame {
         lblBienvenido = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Easy Parking");
 
         jLabel3.setFont(new java.awt.Font("Verdana", 1, 18)); // NOI18N
         jLabel3.setText("Parqueadero Easy Parking");
@@ -54,6 +55,11 @@ public class FrmAmbienteVigilante extends javax.swing.JFrame {
 
         btnEntradaSalida.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         btnEntradaSalida.setText("Entrada/Salida Vehículos");
+        btnEntradaSalida.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEntradaSalidaActionPerformed(evt);
+            }
+        });
 
         lblBienvenido.setText("Bienvenido ");
 
@@ -94,6 +100,11 @@ public class FrmAmbienteVigilante extends javax.swing.JFrame {
     private void btnCambiarContrasenaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCambiarContrasenaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnCambiarContrasenaActionPerformed
+
+    private void btnEntradaSalidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEntradaSalidaActionPerformed
+        RegistrodeEntrada frm = new RegistrodeEntrada(usuarioVO);
+            frm.setVisible(true);
+    }//GEN-LAST:event_btnEntradaSalidaActionPerformed
 
     /**
      * @param args the command line arguments

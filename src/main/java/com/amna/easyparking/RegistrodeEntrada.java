@@ -5,16 +5,20 @@
  */
 package com.amna.easyparking;
 
+import com.amna.easyparking.vo.UsuarioVO;
+
 /**
  *
  * @author USUARIO
  */
 public class RegistrodeEntrada extends javax.swing.JFrame {
-
+    
+    private UsuarioVO usuarioVO = null;
     /**
      * Creates new form RegistrodeEntrada
      */
-    public RegistrodeEntrada() {
+    public RegistrodeEntrada(UsuarioVO usuarioVO) {// este es un construtor
+        this.usuarioVO = usuarioVO;//el valor que se recibe en el parámetro del constructor lo asigna a la propiedad private UsuarioVO
         initComponents();
     }
 
@@ -160,7 +164,7 @@ public class RegistrodeEntrada extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new RegistrodeEntrada().setVisible(true);
+               // new RegistrodeEntrada().setVisible(true);
             }
         });
     }

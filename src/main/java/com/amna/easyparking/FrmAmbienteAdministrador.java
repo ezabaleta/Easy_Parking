@@ -5,17 +5,27 @@
  */
 package com.amna.easyparking;
 
+import com.amna.easyparking.vo.UsuarioVO;
+
 /**
  *
  * @author Elsa Mellissa
  */
 public class FrmAmbienteAdministrador extends javax.swing.JFrame {
 
+    private UsuarioVO usuarioVO = null;
+
     /**
      * Creates new form FrmAmbienteAdministrador
      */
-    public FrmAmbienteAdministrador() {
-        initComponents();
+    public FrmAmbienteAdministrador(UsuarioVO usuarioVO) {
+        this.usuarioVO = usuarioVO;
+        initComponents();//crea todos los componente del formulario
+        this.lblBienvenido.setText("Bienvenido(a) " + usuarioVO.getNombre());
+    }
+
+    private FrmAmbienteAdministrador() {
+       // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     /**
@@ -30,9 +40,10 @@ public class FrmAmbienteAdministrador extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         btnCambiarContrasena = new javax.swing.JButton();
         btnCierreCajaInformes = new javax.swing.JButton();
-        txtBienvenido = new javax.swing.JLabel();
+        lblBienvenido = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Easy Parking");
 
         jLabel3.setFont(new java.awt.Font("Verdana", 1, 18)); // NOI18N
         jLabel3.setText("Parqueadero Easy Parking");
@@ -53,7 +64,7 @@ public class FrmAmbienteAdministrador extends javax.swing.JFrame {
             }
         });
 
-        txtBienvenido.setText("Bienvenido ");
+        lblBienvenido.setText("Bienvenido ");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -69,7 +80,7 @@ public class FrmAmbienteAdministrador extends javax.swing.JFrame {
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addComponent(btnCambiarContrasena, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnCierreCajaInformes, javax.swing.GroupLayout.DEFAULT_SIZE, 222, Short.MAX_VALUE))
-                    .addComponent(txtBienvenido, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lblBienvenido, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -78,7 +89,7 @@ public class FrmAmbienteAdministrador extends javax.swing.JFrame {
                 .addGap(27, 27, 27)
                 .addComponent(jLabel3)
                 .addGap(28, 28, 28)
-                .addComponent(txtBienvenido)
+                .addComponent(lblBienvenido)
                 .addGap(18, 18, 18)
                 .addComponent(btnCambiarContrasena, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -136,6 +147,12 @@ public class FrmAmbienteAdministrador extends javax.swing.JFrame {
     private javax.swing.JButton btnCambiarContrasena;
     private javax.swing.JButton btnCierreCajaInformes;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel txtBienvenido;
+    private javax.swing.JLabel lblBienvenido;
     // End of variables declaration//GEN-END:variables
+
+    private class lblBienvenido {
+
+        public lblBienvenido() {
+        }
+    }
 }

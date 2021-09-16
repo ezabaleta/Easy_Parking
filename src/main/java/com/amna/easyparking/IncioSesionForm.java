@@ -40,6 +40,7 @@ public class IncioSesionForm extends javax.swing.JFrame {
         txtContrasena = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Easy Parking");
 
         txtCuenta.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -141,6 +142,9 @@ public class IncioSesionForm extends javax.swing.JFrame {
         if (optUsuario.get().getTipo().equalsIgnoreCase("ADMINISTRADOR")) {
             //Abrir ambiente de administrador
             System.out.println("Abriendo ambiente del administrador");
+            FrmAmbienteAdministrador frm = new FrmAmbienteAdministrador(optUsuario.get());
+            frm.setVisible(true);
+            this.dispose();
             
             
         } else {
