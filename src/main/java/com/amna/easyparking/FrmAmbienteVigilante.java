@@ -5,17 +5,24 @@
  */
 package com.amna.easyparking;
 
+import com.amna.easyparking.vo.UsuarioVO;
+
 /**
  *
  * @author Elsa Mellissa
  */
 public class FrmAmbienteVigilante extends javax.swing.JFrame {
-
+    
+    private UsuarioVO usuarioVO = null;
+    
     /**
      * Creates new form AmbienteVigilante
      */
-    public FrmAmbienteVigilante() {
-        initComponents();
+    public FrmAmbienteVigilante(UsuarioVO usuarioVO) { //Este es un constructor
+        this.usuarioVO = usuarioVO;
+        initComponents();//crea todos los componente del formulario
+        this.lblBienvenido.setText("Bienvenido(a) " + usuarioVO.getNombre());
+        
     }
 
     /**
@@ -30,6 +37,7 @@ public class FrmAmbienteVigilante extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         btnCambiarContrasena = new javax.swing.JButton();
         btnEntradaSalida = new javax.swing.JButton();
+        lblBienvenido = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -47,6 +55,8 @@ public class FrmAmbienteVigilante extends javax.swing.JFrame {
         btnEntradaSalida.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         btnEntradaSalida.setText("Entrada/Salida Vehículos");
 
+        lblBienvenido.setText("Bienvenido ");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -57,9 +67,11 @@ public class FrmAmbienteVigilante extends javax.swing.JFrame {
                 .addGap(55, 55, 55))
             .addGroup(layout.createSequentialGroup()
                 .addGap(87, 87, 87)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(btnEntradaSalida, javax.swing.GroupLayout.DEFAULT_SIZE, 222, Short.MAX_VALUE)
-                    .addComponent(btnCambiarContrasena, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblBienvenido, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(btnEntradaSalida, javax.swing.GroupLayout.DEFAULT_SIZE, 222, Short.MAX_VALUE)
+                        .addComponent(btnCambiarContrasena, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -67,7 +79,9 @@ public class FrmAmbienteVigilante extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(25, 25, 25)
                 .addComponent(jLabel3)
-                .addGap(61, 61, 61)
+                .addGap(18, 18, 18)
+                .addComponent(lblBienvenido)
+                .addGap(29, 29, 29)
                 .addComponent(btnCambiarContrasena, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(26, 26, 26)
                 .addComponent(btnEntradaSalida, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -114,7 +128,7 @@ public class FrmAmbienteVigilante extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new FrmAmbienteVigilante().setVisible(true);
+             //   new FrmAmbienteVigilante().setVisible(true);
             }
         });
     }
@@ -123,5 +137,6 @@ public class FrmAmbienteVigilante extends javax.swing.JFrame {
     private javax.swing.JButton btnCambiarContrasena;
     private javax.swing.JButton btnEntradaSalida;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel lblBienvenido;
     // End of variables declaration//GEN-END:variables
 }

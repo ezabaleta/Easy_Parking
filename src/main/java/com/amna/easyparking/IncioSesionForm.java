@@ -141,10 +141,14 @@ public class IncioSesionForm extends javax.swing.JFrame {
         if (optUsuario.get().getTipo().equalsIgnoreCase("ADMINISTRADOR")) {
             //Abrir ambiente de administrador
             System.out.println("Abriendo ambiente del administrador");
-
+            
+            
         } else {
             //Abrir ambiente de Vigilante
             System.out.println("Abriendo ambiente del vigilante");
+            FrmAmbienteVigilante frm = new FrmAmbienteVigilante(optUsuario.get());
+            frm.setVisible(true);
+            this.dispose();
         }
 
     }//GEN-LAST:event_btnIniciarSesionActionPerformed

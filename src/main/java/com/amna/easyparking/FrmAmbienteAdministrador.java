@@ -30,6 +30,7 @@ public class FrmAmbienteAdministrador extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         btnCambiarContrasena = new javax.swing.JButton();
         btnCierreCajaInformes = new javax.swing.JButton();
+        txtBienvenido = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -52,6 +53,8 @@ public class FrmAmbienteAdministrador extends javax.swing.JFrame {
             }
         });
 
+        txtBienvenido.setText("Bienvenido ");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -62,9 +65,11 @@ public class FrmAmbienteAdministrador extends javax.swing.JFrame {
                 .addGap(57, 57, 57))
             .addGroup(layout.createSequentialGroup()
                 .addGap(83, 83, 83)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(btnCambiarContrasena, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnCierreCajaInformes, javax.swing.GroupLayout.DEFAULT_SIZE, 222, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(btnCambiarContrasena, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnCierreCajaInformes, javax.swing.GroupLayout.DEFAULT_SIZE, 222, Short.MAX_VALUE))
+                    .addComponent(txtBienvenido, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -72,7 +77,9 @@ public class FrmAmbienteAdministrador extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(27, 27, 27)
                 .addComponent(jLabel3)
-                .addGap(60, 60, 60)
+                .addGap(28, 28, 28)
+                .addComponent(txtBienvenido)
+                .addGap(18, 18, 18)
                 .addComponent(btnCambiarContrasena, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btnCierreCajaInformes, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -129,5 +136,6 @@ public class FrmAmbienteAdministrador extends javax.swing.JFrame {
     private javax.swing.JButton btnCambiarContrasena;
     private javax.swing.JButton btnCierreCajaInformes;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel txtBienvenido;
     // End of variables declaration//GEN-END:variables
 }
