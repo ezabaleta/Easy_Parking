@@ -30,9 +30,12 @@
           </Group>
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="-2" pref="87" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                  <Component id="btnEntradaSalida" pref="222" max="32767" attributes="0"/>
-                  <Component id="btnCambiarContrasena" max="32767" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="lblBienvenido" min="-2" pref="234" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                      <Component id="btnEntradaSalida" pref="222" max="32767" attributes="0"/>
+                      <Component id="btnCambiarContrasena" max="32767" attributes="0"/>
+                  </Group>
               </Group>
               <EmptySpace max="32767" attributes="0"/>
           </Group>
@@ -43,7 +46,9 @@
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
               <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="61" max="-2" attributes="0"/>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <Component id="lblBienvenido" min="-2" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
               <Component id="btnCambiarContrasena" min="-2" pref="35" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
               <Component id="btnEntradaSalida" min="-2" pref="35" max="-2" attributes="0"/>
@@ -78,6 +83,11 @@
           <Font name="Tahoma" size="14" style="1"/>
         </Property>
         <Property name="text" type="java.lang.String" value="Entrada/Salida Veh&#xed;culos"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblBienvenido">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Bienvenido "/>
       </Properties>
     </Component>
   </SubComponents>
