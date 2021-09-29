@@ -25,11 +25,25 @@ public class UsuarioDAO {
         this.con = con;
     }
     
-    public Optional<UsuarioVO> consultar (String cuenta) throws SQLException {
+    public void actualizar (UsuarioVO usuarioVO) throws SQLException { //throws indica que el método puede lanzar una exepción
+       //void no devuelve nada
+        String sql = "Update usuario set nombre = ?, tipo = ?, cuenta = ?, contrasena = ? where id_usuario = ?";
+        PreparedStatement ps = con.prepareStatement(sql);
+        ps.setString(1, usuarioVO.getNombre());
+        ps.setString(2, usuarioVO.getTipo());
+        ps.setString(3, usuarioVO.getCuenta());
+        ps.setString(4, usuarioVO.getContrasena());
+        ps.setInt(5, usuarioVO.getIdUsuario());
+        ps.executeUpdate(); //devuelve cuantas filas modificó
+        
+        
+    }
+    
+    public Optional<UsuarioVO> consultar (String cuenta) throws SQLException { //optional es una clase que indica que el objeto puede devolver o no un dato
         String sql = "Select * from usuario where cuenta = ?";
         PreparedStatement ps = con.prepareStatement(sql);
         ps.setString(1, cuenta);
-        ResultSet rs =ps.executeQuery();
+        ResultSet rs =ps.executeQuery();// execute Query ejecuta la consulta
         
         if (rs.next()){
             UsuarioVO usuarioVO = new UsuarioVO();
@@ -42,5 +56,4 @@ public class UsuarioDAO {
         }
         return Optional.empty();
     }
-    
 }

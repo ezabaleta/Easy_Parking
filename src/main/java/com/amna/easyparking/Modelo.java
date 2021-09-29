@@ -18,17 +18,17 @@ import java.util.logging.Logger;
  *
  * @author Elsa Mellissa
  */
-public class Modelo {
+public class Modelo {  // la clase modelo se encarga de la lógica del negocio, se agregan todos los métodos que se necesiten, indica al DAO lo que hay que hacer
 
     public Optional<UsuarioVO> consultarUsuario(String cuenta) {
 
         Connection con = null;
         try {
-            con = Conexion.getConexion();
-            UsuarioDAO UsuarioDAO = new UsuarioDAO(con);
-            return UsuarioDAO.consultar(cuenta);
-            
-        } catch (SQLException ex) {
+            con = Conexion.getConexion(); //Se establece la conexión
+            UsuarioDAO usuarioDAO = new UsuarioDAO(con); //instancio el DAO
+            return usuarioDAO.consultar(cuenta);//Consulto el usuario
+
+        } catch (SQLException ex) {  //catch atrapa la exepción
             Logger.getLogger(Modelo.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             if (con != null) {
@@ -38,4 +38,19 @@ public class Modelo {
         return Optional.empty();
     }
 
+    public void actualizar(UsuarioVO usuarioVO) {
+        Connection con = null;
+        try {
+            con = Conexion.getConexion(); //Se establece la conexión
+            UsuarioDAO usuarioDAO = new UsuarioDAO(con); //instancio el DAO
+            usuarioDAO.actualizar(usuarioVO);//actualizo el usuario
+
+        } catch (SQLException ex) {  //catch atrapa la exepción
+            Logger.getLogger(Modelo.class.getName()).log(Level.SEVERE, null, ex);//imprime la salida en consola
+        } finally {
+            if (con != null) {
+                Conexion.close(con);
+            }
+        }
+    }
 }
