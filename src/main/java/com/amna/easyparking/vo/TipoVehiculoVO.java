@@ -29,6 +29,11 @@ public class TipoVehiculoVO {
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
+
+    @Override
+    public String toString() {                          //consultar los datos de Tipo vehículo
+        return idTipoVehiculo + ":" + nombre;
+    }
     
     
     

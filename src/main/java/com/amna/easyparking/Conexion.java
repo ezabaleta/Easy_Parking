@@ -36,7 +36,8 @@ public class Conexion {
         }
     }
 
-    public static void main(String[] args) throws SQLException {
+    //Se prueba la conexión
+    public static void main(String[] args) throws SQLException { 
         Connection con = null;
         try {
             con = Conexion.getConexion();
