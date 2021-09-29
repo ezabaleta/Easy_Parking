@@ -6,7 +6,6 @@
 package com.amna.easyparking.vo;
 
 /**
- *
  * @author Angelica
  */
 public class RegistroVO {
