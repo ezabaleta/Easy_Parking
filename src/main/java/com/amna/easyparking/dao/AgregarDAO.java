@@ -5,7 +5,6 @@
  */
 package com.amna.easyparking.dao;
 
-package com.amna.easyparking.dao;
 
 import com.amna.easyparking.vo.UsuarioVO;
 import java.sql.Connection;

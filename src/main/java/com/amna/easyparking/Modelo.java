@@ -53,4 +53,20 @@ public class Modelo {  // la clase modelo se encarga de la lógica del negocio, 
             }
         }
     }
+
+    public void insertar(UsuarioVO usuarioVO) {
+        Connection con = null;
+        try {
+            con = Conexion.getConexion(); //Se establece la conexión
+            UsuarioDAO usuarioDAO = new UsuarioDAO(con); //instancio el DAO
+            usuarioDAO.insertar(usuarioVO);//actualizo el usuario
+
+        } catch (SQLException ex) {  //catch atrapa la exepción
+            Logger.getLogger(Modelo.class.getName()).log(Level.SEVERE, null, ex);//imprime la salida en consola
+        } finally {
+            if (con != null) {
+                Conexion.close(con);
+            }
+        }
+    }
 }

@@ -27,6 +27,22 @@ public class UsuarioDAO {
         this.con = con;
     }
     
+    public void insertar (UsuarioVO usuarioVO) throws SQLException { //throws indica que el método puede lanzar una exepción
+       //void no devuelve nada
+        String sql = "Insert into usuario (nombre, tipo, cuenta, contrasena) values(?,?,?,?) returning id_usuario";
+        PreparedStatement ps = con.prepareStatement(sql);
+        ps.setString(1, usuarioVO.getNombre());
+        ps.setString(2, usuarioVO.getTipo());
+        ps.setString(3, usuarioVO.getCuenta());
+        ps.setString(4, usuarioVO.getContrasena());
+        ps.executeUpdate(); //devuelve cuantas filas modificó
+        ResultSet rs = ps.getGeneratedKeys();
+        if (rs.next()){
+            usuarioVO.setIdUsuario(rs.getInt("id_usuario"));
+        }
+        
+    }
+    
     public void actualizar (UsuarioVO usuarioVO) throws SQLException { //throws indica que el método puede lanzar una exepción
        //void no devuelve nada
         String sql = "Update usuario set nombre = ?, tipo = ?, cuenta = ?, contrasena = ? where id_usuario = ?";
@@ -58,6 +74,8 @@ public class UsuarioDAO {
         }
         return Optional.empty();
     }
+    
+    
     public List<UsuarioVO> listar(){
         List<UsuarioVO> listaUsuarios = new ArrayList<>();
         try {
@@ -76,7 +94,7 @@ public class UsuarioDAO {
             }
             resultado.close();
             sentencia.close();
-            con.close();
+            //con.close();
             
             
         } catch (Exception e) {
