@@ -10,6 +10,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -55,5 +57,37 @@ public class UsuarioDAO {
             return Optional.of(usuarioVO);   
         }
         return Optional.empty();
+    }
+    public List<UsuarioVO> listar(){
+        List<UsuarioVO> listaUsuarios = new ArrayList<>();
+        try {
+            String sql = "Select * from usuario;";
+            PreparedStatement sentencia = con.prepareStatement(sql);
+            ResultSet resultado = sentencia.executeQuery();
+            while (resultado.next()){
+                UsuarioVO  usuarioVO = new UsuarioVO();
+                usuarioVO.setIdUsuario (resultado.getInt("id_usuario"));
+                usuarioVO.setCuenta(resultado.getString("cuenta"));
+                usuarioVO.setNombre(resultado.getString("nombre"));
+                usuarioVO.setContrasena(resultado.getString("contrasena"));
+                usuarioVO.setTipo(resultado.getString("tipo"));
+                
+                listaUsuarios.add(usuarioVO);
+            }
+            resultado.close();
+            sentencia.close();
+            con.close();
+            
+            
+        } catch (Exception e) {
+            System.out.println("Ocurrió un error en el proceso DAO al listar los Usuarios");
+            System.out.println("Mensaje del error:"+ e.getMessage());
+            System.out.println("Detalle del error");
+            
+            e.printStackTrace();         
+        }
+            
+     
+        return listaUsuarios;
     }
 }
