@@ -108,4 +108,30 @@ public class UsuarioDAO {
      
         return listaUsuarios;
     }
+   
+    public boolean eliminar (int id){
+        try {
+            String sql = "delete from usuario where id=?";
+            PreparedStatement sentencia = con.prepareStatement(sql);
+            sentencia.setInt(1, id);  
+            sentencia.executeUpdate();
+            sentencia.close();
+            con.close();
+            
+            return true;
+            
+        } catch (Exception e){
+            
+            System.out.println("Ocurrió un error en el proceso DAO al eliminar el Usuario");
+            System.out.println("Mensaje del error:"+ e.getMessage());
+            System.out.println("Detalle del error");
+            
+            e.printStackTrace(); 
+            return false;   
+        }
+        
+        
+        
+    }
+    
 }

@@ -10,6 +10,7 @@ import com.amna.easyparking.dao.UsuarioDAO;
 import com.amna.easyparking.vo.UsuarioVO;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -68,5 +69,37 @@ public class Modelo {  // la clase modelo se encarga de la lógica del negocio, 
                 Conexion.close(con);
             }
         }
+    }
+    
+    public void listar (UsuarioVO usuarioVO){
+        Connection con = null;
+        try {
+            con = Conexion.getConexion(); //Se establece la conexión
+            UsuarioDAO usuarioDAO = new UsuarioDAO(con); //instancio el DAO
+            usuarioDAO.listar();
+
+        } catch (SQLException ex) {  //catch atrapa la exepción
+            Logger.getLogger(Modelo.class.getName()).log(Level.SEVERE, null, ex);//imprime la salida en consola
+        } finally {
+            if (con != null) {
+                Conexion.close(con);
+            }
+        }    
+    }
+    
+    public void eliminar (UsuarioVO usuarioVO){
+         Connection con = null;
+        try {
+            con = Conexion.getConexion(); //Se establece la conexión
+            UsuarioDAO usuarioDAO = new UsuarioDAO(con); //instancio el DAO
+            usuarioDAO.eliminar();
+
+        } catch (SQLException ex) {  //catch atrapa la exepción
+            Logger.getLogger(Modelo.class.getName()).log(Level.SEVERE, null, ex);//imprime la salida en consola
+        } finally {
+            if (con != null) {
+                Conexion.close(con);
+            }
+        }       
     }
 }
