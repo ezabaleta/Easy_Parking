@@ -76,25 +76,24 @@ public class UsuarioDAO {
     }
     
     
-    public List<UsuarioVO> listar(){
+    public List<UsuarioVO> listar() throws SQLException {
         List<UsuarioVO> listaUsuarios = new ArrayList<>();
         try {
             String sql = "Select * from usuario;";
-            PreparedStatement sentencia = con.prepareStatement(sql);
-            ResultSet resultado = sentencia.executeQuery();
-            while (resultado.next()){
-                UsuarioVO  usuarioVO = new UsuarioVO();
-                usuarioVO.setIdUsuario (resultado.getInt("id_usuario"));
-                usuarioVO.setCuenta(resultado.getString("cuenta"));
-                usuarioVO.setNombre(resultado.getString("nombre"));
-                usuarioVO.setContrasena(resultado.getString("contrasena"));
-                usuarioVO.setTipo(resultado.getString("tipo"));
-                
-                listaUsuarios.add(usuarioVO);
+            try (PreparedStatement sentencia = con.prepareStatement(sql)) {
+                ResultSet resultado = sentencia.executeQuery();
+                while (resultado.next()){
+                    UsuarioVO  usuarioVO = new UsuarioVO();
+                    usuarioVO.setIdUsuario (resultado.getInt("id_usuario"));
+                    usuarioVO.setCuenta(resultado.getString("cuenta"));
+                    usuarioVO.setNombre(resultado.getString("nombre"));
+                    usuarioVO.setContrasena(resultado.getString("contrasena"));
+                    usuarioVO.setTipo(resultado.getString("tipo"));
+                    
+                    listaUsuarios.add(usuarioVO);
+                }   resultado.close();
+                //con.close();
             }
-            resultado.close();
-            sentencia.close();
-            //con.close();
             
             
         } catch (Exception e) {
@@ -109,7 +108,7 @@ public class UsuarioDAO {
         return listaUsuarios;
     }
    
-    public boolean eliminar (int id){
+    public boolean eliminar (int id) throws SQLException{
         try {
             String sql = "delete from usuario where id=?";
             PreparedStatement sentencia = con.prepareStatement(sql);

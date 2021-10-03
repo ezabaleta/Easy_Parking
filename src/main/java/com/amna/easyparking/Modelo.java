@@ -39,7 +39,7 @@ public class Modelo {  // la clase modelo se encarga de la lógica del negocio, 
         return Optional.empty();
     }
 
-    public void actualizar(UsuarioVO usuarioVO) {
+    public void actualizarUsuario(UsuarioVO usuarioVO) {
         Connection con = null;
         try {
             con = Conexion.getConexion(); //Se establece la conexión
@@ -55,7 +55,7 @@ public class Modelo {  // la clase modelo se encarga de la lógica del negocio, 
         }
     }
 
-    public void insertar(UsuarioVO usuarioVO) {
+    public void insertarUsuario(UsuarioVO usuarioVO) {
         Connection con = null;
         try {
             con = Conexion.getConexion(); //Se establece la conexión
@@ -71,12 +71,12 @@ public class Modelo {  // la clase modelo se encarga de la lógica del negocio, 
         }
     }
     
-    public void listar (UsuarioVO usuarioVO){
+    public List<UsuarioVO> listarUsuario (){
         Connection con = null;
         try {
             con = Conexion.getConexion(); //Se establece la conexión
             UsuarioDAO usuarioDAO = new UsuarioDAO(con); //instancio el DAO
-            usuarioDAO.listar();
+            return usuarioDAO.listar();           
 
         } catch (SQLException ex) {  //catch atrapa la exepción
             Logger.getLogger(Modelo.class.getName()).log(Level.SEVERE, null, ex);//imprime la salida en consola
@@ -84,15 +84,16 @@ public class Modelo {  // la clase modelo se encarga de la lógica del negocio, 
             if (con != null) {
                 Conexion.close(con);
             }
-        }    
+        } 
+        return null;
     }
     
-    public void eliminar (UsuarioVO usuarioVO){
+    public void eliminarUsuario (UsuarioVO usuarioVO){
          Connection con = null;
         try {
             con = Conexion.getConexion(); //Se establece la conexión
             UsuarioDAO usuarioDAO = new UsuarioDAO(con); //instancio el DAO
-            usuarioDAO.eliminar();
+            usuarioDAO.eliminar(usuarioVO.getIdUsuario());
 
         } catch (SQLException ex) {  //catch atrapa la exepción
             Logger.getLogger(Modelo.class.getName()).log(Level.SEVERE, null, ex);//imprime la salida en consola
