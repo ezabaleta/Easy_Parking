@@ -20,6 +20,7 @@ public class RegistroVO {
     private int total;
     private String fecha_salida;
     private int id_usuario;
+    private int id_puesto;
 
     public int getId_registro() {
         return id_registro;
@@ -107,6 +108,14 @@ public class RegistroVO {
 
     public void setId_usuario(int id_usuario) {
         this.id_usuario = id_usuario;
+    }
+
+    public int getId_puesto() {
+        return id_puesto;
+    }
+
+    public void setId_puesto(int id_puesto) {
+        this.id_puesto = id_puesto;
     }
     
     
