@@ -5,7 +5,9 @@
  */
 package com.amna.easyparking;
 
+import com.amna.easyparking.dao.RegistroDAO;
 import com.amna.easyparking.dao.UsuarioDAO;
+import com.amna.easyparking.vo.RegistroVO;
 import com.amna.easyparking.vo.UsuarioVO;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -116,4 +118,37 @@ public class Modelo {  // la clase modelo se encarga de la lógica del negocio, 
         }
         return false;
     }
+    public Optional<RegistroVO> consultarRegistro(String placa) {
+        Connection con = null;
+        try {
+            con = Conexion.getConexion(); //Se establece la conexión
+            RegistroDAO registroDAO = new RegistroDAO(con); //instancio el DAO
+            return registroDAO.consultar(placa);//Consulto el usuario
+
+        } catch (SQLException ex) {  //catch atrapa la exepción
+            Logger.getLogger(Modelo.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            Conexion.close(con);
+        }
+        return Optional.empty();       
+    }
+    
+    
+    
+    public boolean actualizarRegistro (RegistroVO registroVO) {
+        Connection con = null;
+        try {
+            con = Conexion.getConexion(); //Se establece la conexión
+            RegistroDAO registroDAO = new RegistroDAO(con); //instancio el DAO
+            registroDAO.actualizar(registroVO);//actualizo el usuario
+            return true;// se agrega para trbajar con el front
+
+        } catch (SQLException ex) {  //catch atrapa la exepción
+            Logger.getLogger(Modelo.class.getName()).log(Level.SEVERE, null, ex);//imprime la salida en consola
+        } finally {
+            Conexion.close(con);
+        }
+        return false;
+    }
+    
 }
