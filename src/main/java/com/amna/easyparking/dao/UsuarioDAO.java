@@ -10,6 +10,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -28,8 +29,9 @@ public class UsuarioDAO {
 
     public void insertar(UsuarioVO usuarioVO) throws SQLException { //throws indica que el método puede lanzar una exepción
         //void no devuelve nada
-        String sql = "Insert into usuario (nombre, tipo, cuenta, contrasena) values(?,?,?,?) returning id_usuario";
-        try (PreparedStatement ps = con.prepareStatement(sql)) {
+        // String sql = "Insert into usuario (nombre, tipo, cuenta, contrasena) values(?,?,?,?) returning id_usuario";
+        String sql = "Insert into usuario (nombre, tipo, cuenta, contrasena) values(?,?,?,?)";
+        try (PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             ps.setString(1, usuarioVO.getNombre());
             ps.setString(2, usuarioVO.getTipo());
             ps.setString(3, usuarioVO.getCuenta());
@@ -37,7 +39,7 @@ public class UsuarioDAO {
             ps.executeUpdate(); //devuelve cuantas filas modificó
             ResultSet rs = ps.getGeneratedKeys();
             if (rs.next()) {
-                usuarioVO.setIdUsuario(rs.getInt("id_usuario"));
+                usuarioVO.setIdUsuario(rs.getInt(1));
             }
         }
     }
@@ -94,7 +96,7 @@ public class UsuarioDAO {
     }
 
     public void eliminar(int id) throws SQLException {
-        String sql = "delete from usuario where id=?";
+        String sql = "delete from usuario where id_usuario = ?";
         try (PreparedStatement sentencia = con.prepareStatement(sql)) {
             sentencia.setInt(1, id);
             sentencia.executeUpdate();
