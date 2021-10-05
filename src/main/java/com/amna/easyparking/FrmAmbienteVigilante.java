@@ -22,6 +22,7 @@ public class FrmAmbienteVigilante extends javax.swing.JFrame {
         this.usuarioVO = usuarioVO;
         initComponents();//crea todos los componente del formulario
         this.lblBienvenido.setText("Bienvenido(a) " + usuarioVO.getNombre());
+        this.setLocationRelativeTo(null);
         
     }
 

@@ -21,6 +21,7 @@ public class IncioSesionForm extends javax.swing.JFrame {
      */
     public IncioSesionForm() {
         initComponents();
+        this.setLocationRelativeTo(null);
     }
 
     /**
