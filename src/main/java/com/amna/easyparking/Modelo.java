@@ -5,8 +5,10 @@
  */
 package com.amna.easyparking;
 
+import com.amna.easyparking.dao.CierreDAO;
 import com.amna.easyparking.dao.RegistroDAO;
 import com.amna.easyparking.dao.UsuarioDAO;
+import com.amna.easyparking.vo.CierreVO;
 import com.amna.easyparking.vo.RegistroVO;
 import com.amna.easyparking.vo.UsuarioVO;
 import java.sql.Connection;
@@ -123,7 +125,7 @@ public class Modelo {  // la clase modelo se encarga de la lógica del negocio, 
         try {
             con = Conexion.getConexion(); //Se establece la conexión
             RegistroDAO registroDAO = new RegistroDAO(con); //instancio el DAO
-            return registroDAO.consultar(placa);//Consulto el usuario
+            return registroDAO.consultar(placa);//Consulto el registro
 
         } catch (SQLException ex) {  //catch atrapa la exepción
             Logger.getLogger(Modelo.class.getName()).log(Level.SEVERE, null, ex);
@@ -140,13 +142,62 @@ public class Modelo {  // la clase modelo se encarga de la lógica del negocio, 
         try {
             con = Conexion.getConexion(); //Se establece la conexión
             RegistroDAO registroDAO = new RegistroDAO(con); //instancio el DAO
-            registroDAO.actualizar(registroVO);//actualizo el usuario
+            registroDAO.actualizar(registroVO);//actualizo el registro
             return true;// se agrega para trbajar con el front
 
         } catch (SQLException ex) {  //catch atrapa la exepción
             Logger.getLogger(Modelo.class.getName()).log(Level.SEVERE, null, ex);//imprime la salida en consola
         } finally {
             Conexion.close(con);
+        }
+        return false;
+    }
+    
+    public boolean insertarCierre(CierreVO cierreVO) {
+        Connection con = null;
+        try {
+            con = Conexion.getConexion(); //Se establece la conexión
+            CierreDAO cierreDAO = new CierreDAO(con); //instancio el DAO
+            cierreDAO.insetar(cierreVO);//actualizo el cierre
+            return true;
+
+        } catch (SQLException ex) {  //catch atrapa la exepción
+            Logger.getLogger(Modelo.class.getName()).log(Level.SEVERE, null, ex);//imprime la salida en consola
+        } finally {
+            Conexion.close(con);
+        }
+        return false;
+    }
+    
+    public List<CierreVO> listarCierre() {
+        Connection con = null;
+        try {
+            con = Conexion.getConexion(); //Se establece la conexión
+            CierreDAO cierreDAO = new CierreDAO(con); //instancio el DAO
+            return cierreDAO.listar();
+
+        } catch (SQLException ex) {  //catch atrapa la exepción
+            Logger.getLogger(Modelo.class.getName()).log(Level.SEVERE, null, ex);//imprime la salida en consola
+        } finally {
+            Conexion.close(con);
+        }
+        return Collections.EMPTY_LIST;//devuelve una lista vacía para evitar nullpointer exeption
+    }
+    
+    public boolean eliminarCierre (CierreVO cierreVO) {
+        Connection con = null;
+        try {
+            con = Conexion.getConexion(); //Se establece la conexión
+            CierreDAO cierreDAO = new CierreDAO(con); //instancio el DAO
+            cierreDAO.eliminar(cierreVO.getId_cierre());
+            return true;
+
+        } catch (SQLException ex) {  //catch atrapa la exepción
+            Logger.getLogger(Modelo.class.getName()).log(Level.SEVERE, null, ex);//imprime la salida en consola
+        } finally {
+            if (con != null) {
+                Conexion.close(con);
+            }
         }
         return false;
     }
