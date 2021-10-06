@@ -4,23 +4,26 @@ package com.amna.easyparking;
 import java.awt.*;
 import java.awt.print.*;
 import javax.swing.JOptionPane;
+import com.amna.easyparking.vo.UsuarioVO;
 /**
  *
  * @author Angelica
  */
 public class FrmGenerarReciboEntrada extends javax.swing.JFrame implements Printable
 {
-    /**
+     private UsuarioVO usuarioVO = null;
+     /**
      * Creates new form FrmGenerarReciboEntrada
      */
-    public FrmGenerarReciboEntrada() {
+    public FrmGenerarReciboEntrada(UsuarioVO usuarioVO) {
+        this.usuarioVO = usuarioVO;
         initComponents();
         this.setLocationRelativeTo(null);
          
         RegistrodeEntrada recibo1 = new RegistrodeEntrada();
         placa.setText(recibo1.placa);
         fecha.setText(recibo1.fecha);
-        hora.setText(recibo1.hora);
+        hora.setText(recibo1.hora1);
         tipo.setText(recibo1.tipo);
         
          
@@ -55,6 +58,7 @@ public class FrmGenerarReciboEntrada extends javax.swing.JFrame implements Print
         hora = new javax.swing.JTextField();
         tipo = new javax.swing.JTextField();
         jLabel14 = new javax.swing.JLabel();
+        button1 = new java.awt.Button();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Recibo de Ingreso ");
@@ -236,16 +240,25 @@ public class FrmGenerarReciboEntrada extends javax.swing.JFrame implements Print
                 .addGap(16, 16, 16))
         );
 
+        button1.setLabel("NUEVO INGRESO");
+        button1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addGap(0, 65, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
-                .addGap(193, 193, 193)
+                .addGap(103, 103, 103)
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(35, 35, 35)
+                .addComponent(button1, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -253,7 +266,9 @@ public class FrmGenerarReciboEntrada extends javax.swing.JFrame implements Print
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 36, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 42, Short.MAX_VALUE)
+                    .addComponent(button1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -291,6 +306,14 @@ public class FrmGenerarReciboEntrada extends javax.swing.JFrame implements Print
         // TODO add your handling code here:
     }//GEN-LAST:event_tipoActionPerformed
 
+    private void button1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button1ActionPerformed
+        RegistrodeEntrada recibo =  new RegistrodeEntrada(usuarioVO);
+        recibo.setVisible(true);
+        this.setVisible(false);       
+        placa = null; 
+          
+    }//GEN-LAST:event_button1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -320,11 +343,13 @@ public class FrmGenerarReciboEntrada extends javax.swing.JFrame implements Print
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> {
-            new FrmGenerarReciboEntrada().setVisible(true);
+            UsuarioVO UsuarioVO = null;
+            new FrmGenerarReciboEntrada(UsuarioVO).setVisible(true);
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private java.awt.Button button1;
     private javax.swing.JTextField fecha;
     private javax.swing.JTextField hora;
     private javax.swing.JButton jButton1;
