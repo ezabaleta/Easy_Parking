@@ -158,7 +158,7 @@ public class Modelo {  // la clase modelo se encarga de la lógica del negocio, 
         try {
             con = Conexion.getConexion(); //Se establece la conexión
             CierreDAO cierreDAO = new CierreDAO(con); //instancio el DAO
-            cierreDAO.insetar(cierreVO);//actualizo el cierre
+            cierreDAO.insertar(cierreVO);//actualizo el cierre
             return true;
 
         } catch (SQLException ex) {  //catch atrapa la exepción

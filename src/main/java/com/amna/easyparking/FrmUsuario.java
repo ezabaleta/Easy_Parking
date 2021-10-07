@@ -16,9 +16,9 @@ import javax.swing.table.DefaultTableModel;
  * @author Elsa Mellissa
  */
 public class FrmUsuario extends javax.swing.JFrame {
-    
+
     private final Modelo modelo = new Modelo();
-    
+
     private final UsuarioTableModel usuarioTableModel = new UsuarioTableModel();
 
     /**
@@ -27,6 +27,7 @@ public class FrmUsuario extends javax.swing.JFrame {
     public FrmUsuario() {
         usuarioTableModel.setListaUsuarios(modelo.listarUsuario());
         initComponents();
+        setLocationRelativeTo(null);
     }
 
     /**
@@ -66,6 +67,11 @@ public class FrmUsuario extends javax.swing.JFrame {
         });
 
         btnModificar.setText("Modificar");
+        btnModificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnModificarActionPerformed(evt);
+            }
+        });
 
         btnEliminar.setText("Eliminar");
         btnEliminar.addActionListener(new java.awt.event.ActionListener() {
@@ -137,6 +143,21 @@ public class FrmUsuario extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnAgregarActionPerformed
 
+    private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
+        // TODO add your handling code here:
+        int fila = tblUsuarios.getSelectedRow();
+        if (fila >= 0) {
+            FrmModificarUsuario frm = new FrmModificarUsuario(this, true);
+            frm.setUsuario(usuarioTableModel.getUsuario(fila));
+            frm.setVisible(true);
+            if (frm.getAgregado()) {
+                usuarioTableModel.setListaUsuarios(modelo.listarUsuario());
+            }
+        } else {
+            JOptionPane.showMessageDialog(rootPane, "Debe seleccionar un usuario");
+        }
+    }//GEN-LAST:event_btnModificarActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -186,7 +207,7 @@ public class FrmUsuario extends javax.swing.JFrame {
         String[] nombreColumna = {
             "Nombre", "Tipo Usuario", "Cuenta", "Contraseña"
         };
-        
+
         private List<UsuarioVO> listaUsuarios = Collections.EMPTY_LIST;
 
         public void setListaUsuarios(List<UsuarioVO> listaUsuarios) {
@@ -198,7 +219,7 @@ public class FrmUsuario extends javax.swing.JFrame {
             }
             fireTableDataChanged();
         }
-        
+
         public UsuarioVO getUsuario(int row) {
             return this.listaUsuarios.get(row);
         }
@@ -221,10 +242,14 @@ public class FrmUsuario extends javax.swing.JFrame {
         @Override
         public Object getValueAt(int row, int column) {
             switch (column) {
-                case 0: return listaUsuarios.get(row).getNombre();
-                case 1: return listaUsuarios.get(row).getTipo();
-                case 2: return listaUsuarios.get(row).getCuenta();
-                case 3: return listaUsuarios.get(row).getContrasena();
+                case 0:
+                    return listaUsuarios.get(row).getNombre();
+                case 1:
+                    return listaUsuarios.get(row).getTipo();
+                case 2:
+                    return listaUsuarios.get(row).getCuenta();
+                case 3:
+                    return listaUsuarios.get(row).getContrasena();
             }
             return "";
         }
@@ -242,5 +267,5 @@ public class FrmUsuario extends javax.swing.JFrame {
             return nombreColumna.length;
         }
     }
-    
+
 }

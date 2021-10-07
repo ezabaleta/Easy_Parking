@@ -100,6 +100,9 @@ public class FrmAmbienteVigilante extends javax.swing.JFrame {
 
     private void btnCambiarContrasenaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCambiarContrasenaActionPerformed
         // TODO add your handling code here:
+        FrmCambiarContrasena frmCambiarContraseña = new FrmCambiarContrasena();
+        frmCambiarContraseña.setUsuarioVO(usuarioVO);
+        frmCambiarContraseña.setVisible(true);
     }//GEN-LAST:event_btnCambiarContrasenaActionPerformed
 
     private void btnEntradaSalidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEntradaSalidaActionPerformed

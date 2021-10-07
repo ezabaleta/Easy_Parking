@@ -7,6 +7,7 @@ package com.amna.easyparking.dao;
 
 import com.amna.easyparking.vo.CierreVO;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -26,10 +27,10 @@ public class CierreDAO {
         this.con = con;   
     }
     
-    public void insetar (CierreVO cierreVO) throws SQLException {
+    public void insertar (CierreVO cierreVO) throws SQLException {
         String sql= "Insert into cierre (fecha, subtotal, iva, total, id_usuario) values (?,?,?,?, ?)";
-        try (PreparedStatement ps= con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
-            ps.setString(1, cierreVO.getFecha());   // Aqui tengo duda si debe ser setDate, ya que en la BD es un tipo de dato date
+        try (PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+            ps.setDate(1, new Date(cierreVO.getFecha().getTime()));   // Date Sql, Date util
             ps.setInt(2, cierreVO.getSubtotal());
             ps.setInt(3, cierreVO.getIva());
             ps.setInt(4, cierreVO.getTotal());

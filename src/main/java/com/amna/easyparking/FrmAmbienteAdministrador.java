@@ -22,10 +22,11 @@ public class FrmAmbienteAdministrador extends javax.swing.JFrame {
         this.usuarioVO = usuarioVO;
         initComponents();//crea todos los componente del formulario
         this.lblBienvenido.setText("Bienvenido(a) " + usuarioVO.getNombre());
+        this.setLocationRelativeTo(null);
     }
 
     private FrmAmbienteAdministrador() {
-       // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     /**
@@ -41,6 +42,7 @@ public class FrmAmbienteAdministrador extends javax.swing.JFrame {
         btnCambiarContrasena = new javax.swing.JButton();
         btnCierreCajaInformes = new javax.swing.JButton();
         lblBienvenido = new javax.swing.JLabel();
+        btnGestionarUsuarios = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Easy Parking");
@@ -66,6 +68,14 @@ public class FrmAmbienteAdministrador extends javax.swing.JFrame {
 
         lblBienvenido.setText("Bienvenido ");
 
+        btnGestionarUsuarios.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        btnGestionarUsuarios.setText("Gestionar Usuarios");
+        btnGestionarUsuarios.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGestionarUsuariosActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -79,7 +89,8 @@ public class FrmAmbienteAdministrador extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addComponent(btnCambiarContrasena, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnCierreCajaInformes, javax.swing.GroupLayout.DEFAULT_SIZE, 222, Short.MAX_VALUE))
+                        .addComponent(btnCierreCajaInformes, javax.swing.GroupLayout.DEFAULT_SIZE, 222, Short.MAX_VALUE)
+                        .addComponent(btnGestionarUsuarios, javax.swing.GroupLayout.DEFAULT_SIZE, 222, Short.MAX_VALUE))
                     .addComponent(lblBienvenido, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -94,7 +105,9 @@ public class FrmAmbienteAdministrador extends javax.swing.JFrame {
                 .addComponent(btnCambiarContrasena, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btnCierreCajaInformes, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(102, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(btnGestionarUsuarios, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(49, Short.MAX_VALUE))
         );
 
         pack();
@@ -102,11 +115,20 @@ public class FrmAmbienteAdministrador extends javax.swing.JFrame {
 
     private void btnCambiarContrasenaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCambiarContrasenaActionPerformed
         // TODO add your handling code here:
+        FrmCambiarContrasena frmCambiarContraseña = new FrmCambiarContrasena();
+        frmCambiarContraseña.setUsuarioVO(usuarioVO);
+        frmCambiarContraseña.setVisible(true);
     }//GEN-LAST:event_btnCambiarContrasenaActionPerformed
 
     private void btnCierreCajaInformesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCierreCajaInformesActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnCierreCajaInformesActionPerformed
+
+    private void btnGestionarUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGestionarUsuariosActionPerformed
+        // TODO add your handling code here:
+        FrmUsuario frmUsuario = new FrmUsuario();
+        frmUsuario.setVisible(true);
+    }//GEN-LAST:event_btnGestionarUsuariosActionPerformed
 
     /**
      * @param args the command line arguments
@@ -146,6 +168,7 @@ public class FrmAmbienteAdministrador extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCambiarContrasena;
     private javax.swing.JButton btnCierreCajaInformes;
+    private javax.swing.JButton btnGestionarUsuarios;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel lblBienvenido;
     // End of variables declaration//GEN-END:variables

@@ -12,20 +12,32 @@ import javax.swing.JOptionPane;
  *
  * @author Elsa Mellissa
  */
-public class FrmAgregarUsuario extends javax.swing.JDialog {
+public class FrmModificarUsuario extends javax.swing.JDialog {
 
     private Modelo modelo = new Modelo();
 
-    private boolean agregado = false;
+    private boolean modificado = false;
+    
+    private UsuarioVO usuarioActual = null;
 
     /**
      * Creates new form FrmAgregarUsuario
      */
-    public FrmAgregarUsuario(java.awt.Frame parent, boolean modal) {
+    public FrmModificarUsuario(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         setLocationRelativeTo(parent);
     }
+
+    public void setUsuario(UsuarioVO usuario) {
+        this.usuarioActual = usuario;
+        txtNombre.setText(usuario.getNombre());
+        txtCuenta.setText(usuario.getCuenta());
+        txtContrasena.setText(usuario.getContrasena());
+        cmbTipo.setSelectedItem(usuario.getTipo());
+    }
+    
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -48,7 +60,7 @@ public class FrmAgregarUsuario extends javax.swing.JDialog {
         btnAceptar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Agregar Usuario");
+        setTitle("Modificar Usuario");
 
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel1.setText("Nombre");
@@ -158,22 +170,23 @@ public class FrmAgregarUsuario extends javax.swing.JDialog {
         // validar los campos
         // crear el vo
         UsuarioVO usuarioVO = new UsuarioVO();
+        usuarioVO.setIdUsuario(usuarioActual.getIdUsuario());
         usuarioVO.setNombre(txtNombre.getText());
         usuarioVO.setTipo(cmbTipo.getSelectedItem().toString());
         usuarioVO.setCuenta(txtCuenta.getText());
         usuarioVO.setContrasena(txtContrasena.getText());
         // guardar el vo
-        if (modelo.insertarUsuario(usuarioVO)) {
-            JOptionPane.showMessageDialog(rootPane, "Usuario agregado satisfactoriamente");
-            this.agregado = true;
+        if (modelo.actualizarUsuario(usuarioVO)) {
+            JOptionPane.showMessageDialog(rootPane, "Usuario modificado satisfactoriamente");
+            this.modificado = true;
             dispose();
         } else {
-            JOptionPane.showMessageDialog(rootPane, "Ocurrió un error agregando el usuario");
+            JOptionPane.showMessageDialog(rootPane, "Ocurrió un error modificando el usuario");
         }
     }//GEN-LAST:event_btnAceptarActionPerformed
 
     public boolean getAgregado() {
-        return agregado;
+        return modificado;
     }
 
     /**
@@ -193,20 +206,21 @@ public class FrmAgregarUsuario extends javax.swing.JDialog {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FrmAgregarUsuario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmModificarUsuario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FrmAgregarUsuario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmModificarUsuario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FrmAgregarUsuario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmModificarUsuario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FrmAgregarUsuario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmModificarUsuario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                FrmAgregarUsuario dialog = new FrmAgregarUsuario(new javax.swing.JFrame(), true);
+                FrmModificarUsuario dialog = new FrmModificarUsuario(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
