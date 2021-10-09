@@ -6,11 +6,12 @@
 package com.amna.easyparking.dao;
 
 import com.amna.easyparking.vo.RegistroVO;
-import com.amna.easyparking.vo.UsuarioVO;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -92,5 +93,39 @@ public class RegistroDAO {
             System.out.println("Ocurrió un error actualizando" + excepcion.getMessage());
         }
     }
+
+    
+    public List<RegistroVO> listar() throws SQLException {
+        String sql = "Select * from registro";
+        PreparedStatement ps = con.prepareStatement(sql);
+        ResultSet rs = ps.executeQuery();
+        
+        List<RegistroVO> lista = new ArrayList<>();
+        while(rs.next()){
+            RegistroVO registroVO = new RegistroVO();
+            registroVO.setId_registro(rs.getInt("id_registro"));
+            registroVO.setPlaca(rs.getString("placa"));
+            registroVO.setFecha_ingreso(rs.getString("fecha_ingreso"));
+            registroVO.setId_tipo_vehiculo(rs.getInt("id_tipo_vehiculo"));
+            registroVO.setPermanencia(rs.getInt("permanencia"));
+            registroVO.setTarifa(rs.getInt("tarifa"));
+            registroVO.setSubtotal(rs.getInt("subtotal"));
+            registroVO.setIva(rs.getInt("iva"));
+            registroVO.setTotal(rs.getInt("total"));
+            registroVO.setFecha_salida(rs.getString("fecha_salida"));
+            registroVO.setId_usuario(rs.getInt("id_usuario"));
+            registroVO.setId_puesto(rs.getInt("id_puesto"));
+               
+            lista.add(registroVO);
+        }
+        return lista;
+    }
+
+    public Object consultar() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    
+    
     
 }

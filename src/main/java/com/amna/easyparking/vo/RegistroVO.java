@@ -5,6 +5,15 @@
  */
 package com.amna.easyparking.vo;
 
+import com.amna.easyparking.Conexion;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
+import java.sql.*;
+
+
 /**
  * @author Angelica
  */
@@ -118,6 +127,29 @@ public class RegistroVO {
         this.id_puesto = id_puesto;
     }
     
-    
+    public boolean guardarRegistro() {
+        Conexion conexion = new Conexion();
+        String sentencia = "INSERT INTO REGISTRO(id_registro, placa, fecha_ingreso, id_tipo_vehiculo, permanencia,tarifa,subtotal,iva,total,fecha_salida,id_usuario,id_puesto)"
+                + " VALUES ('"+this.id_registro + "','" +this.placa+ "','" +this.fecha_ingreso+ "','" +this.id_tipo_vehiculo+ "','" +this.permanencia+ "','" +this.tarifa+ "','" +this.subtotal+ "','" +this.iva+"','" +this.total+ "','" +this.fecha_salida+ "','" +this.id_usuario+ "','" +this.id_puesto+ "'); ";    
+            if (conexion.setAutoCommitBD(false)) {
+            if (conexion.insertarBD(sentencia)) {
+                conexion.commitBD();
+                conexion.cerrarConexion();
+                return true;
+            } else {
+                conexion.rollbackBD();
+                conexion.cerrarConexion();
+                return false;
+            }
+        } else {
+            conexion.cerrarConexion();
+            return false;
+        }
+    }
+  @Override
+    public String toString() {                          //consultar los datos de registro
+        return id_registro+ ":" +placa+ ":" +fecha_ingreso+ ":" +id_tipo_vehiculo+ ":" +permanencia+ ":" +tarifa+ ":" +subtotal+ ":" +iva+ ":" +total+ ":" +fecha_salida+ ":" +id_usuario+ ":" +id_puesto;
+
+    }
           
 }

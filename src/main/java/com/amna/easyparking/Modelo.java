@@ -23,7 +23,12 @@ import java.util.logging.Logger;
  *
  * @author Elsa Mellissa
  */
-public class Modelo {  // la clase modelo se encarga de la lógica del negocio, se agregan todos los métodos que se necesiten, indica al DAO lo que hay que hacer
+public class Modelo {  
+
+    static boolean actualizarUsuario(RegistroVO registroVO) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+// la clase modelo se encarga de la lógica del negocio, se agregan todos los métodos que se necesiten, indica al DAO lo que hay que hacer
 
     public Optional<UsuarioVO> consultarUsuario(String cuenta) {
         Connection con = null;

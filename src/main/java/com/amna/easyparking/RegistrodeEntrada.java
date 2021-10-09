@@ -5,10 +5,12 @@
  */
 package com.amna.easyparking;
 
+import com.amna.easyparking.vo.RegistroVO;
 import com.amna.easyparking.vo.UsuarioVO;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.*;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -20,6 +22,7 @@ public class RegistrodeEntrada extends javax.swing.JFrame implements Runnable{
  Thread hilo;
     
     private UsuarioVO usuarioVO = null;
+    private boolean modificado;
     /**
      * Creates new form RegistrodeEntrada
      */
@@ -80,6 +83,7 @@ public class RegistrodeEntrada extends javax.swing.JFrame implements Runnable{
         jButton1 = new javax.swing.JButton();
         JlabelFecha = new java.awt.Label();
         JlabelHora = new java.awt.Label();
+        jButton2 = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -111,14 +115,26 @@ public class RegistrodeEntrada extends javax.swing.JFrame implements Runnable{
 
         JlabelHora.setText("HH:mm:ss");
 
+        jButton2.setText("Generar Recibo");
+        jButton2.setToolTipText("");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGap(43, 43, 43)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(43, 43, 43)
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(29, 29, 29)
+                        .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1)
                             .addComponent(jLabel4)
@@ -130,10 +146,7 @@ public class RegistrodeEntrada extends javax.swing.JFrame implements Runnable{
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                 .addComponent(jTextPlaca)
                                 .addComponent(jComboTipo, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(JlabelHora, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(121, 121, 121)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(JlabelHora, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(54, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -155,9 +168,11 @@ public class RegistrodeEntrada extends javax.swing.JFrame implements Runnable{
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(jComboTipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 44, Short.MAX_VALUE)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(30, 30, 30))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)
+                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(28, 28, 28))
         );
 
         JlabelFecha.getAccessibleContext().setAccessibleName("JlabelFecha");
@@ -193,21 +208,39 @@ public class RegistrodeEntrada extends javax.swing.JFrame implements Runnable{
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-                    
-           placa = jTextPlaca.getText(); 
-           fecha = JlabelFecha.getText(); 
-           hora1 = JlabelHora.getText(); 
-           tipo = (String) jComboTipo.getSelectedItem();
-                 
-           FrmGenerarReciboEntrada recibo =  new FrmGenerarReciboEntrada(usuarioVO);
-           recibo.setVisible(true);
-           this.setVisible(false);
+          
+        RegistroVO registroVO = new RegistroVO();
+        registroVO.setPlaca(jTextPlaca.getText());
+        registroVO.setFecha_ingreso(JlabelFecha.getText());
+        registroVO.setId_tipo_vehiculo(jComboTipo.getSelectedIndex());
+               
+       
+        if (Modelo.actualizarUsuario(registroVO)) {
+            JOptionPane.showMessageDialog(rootPane, "Usuario modificado satisfactoriamente");
+            this.modificado = true;
+            dispose();
+        } else {
+            JOptionPane.showMessageDialog(rootPane, "Ocurrió un error modificando el usuario");
+        }
+              
+          
            
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jTextPlacaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextPlacaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextPlacaActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+           placa = jTextPlaca.getText(); 
+           fecha = JlabelFecha.getText(); 
+           hora1 = JlabelHora.getText(); 
+           tipo = (String) jComboTipo.getSelectedItem();
+           
+           FrmGenerarReciboEntrada recibo =  new FrmGenerarReciboEntrada(usuarioVO);
+           recibo.setVisible(true);
+           this.setVisible(false);        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -246,6 +279,7 @@ public class RegistrodeEntrada extends javax.swing.JFrame implements Runnable{
     private java.awt.Label JlabelFecha;
     private java.awt.Label JlabelHora;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JComboBox<String> jComboTipo;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
