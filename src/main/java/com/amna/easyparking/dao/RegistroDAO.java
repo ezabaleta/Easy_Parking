@@ -13,6 +13,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.lang.String;
 
 /**
  *
@@ -26,7 +27,7 @@ public class RegistroDAO {
         this.con = con;
     }
     
-    public void insertar(RegistroVO registroVO) throws SQLException { //throws indica que el método puede lanzar una exepción
+   /* public void insertar(RegistroVO registroVO) throws SQLException { //throws indica que el método puede lanzar una exepción
         //void no devuelve nada
         String sql = "Insert into registro (placa, fecha_ingreso, id_tipo_vehiculo, permanencia, tarifa, subtotal, iva, total, fecha_salida, id_usuario, id_puesto) values(?,?,?,?,?,?,?,?,?,?,?) returning id_registro";
         try (PreparedStatement ps = con.prepareStatement(sql)) {
@@ -48,7 +49,7 @@ public class RegistroDAO {
                 registroVO.setId_registro(rs.getInt("id_registro"));
             }
         }
-    }
+    }*/
     
     public Optional<RegistroVO> consultar (String placa) throws SQLException {
         String sql = "Select * from registro where placa = ?";
@@ -95,12 +96,12 @@ public class RegistroDAO {
     }
 
     
-    public List<RegistroVO> listar() throws SQLException {
+    public List<RegistroVO> listar_registro() throws SQLException {
         String sql = "Select * from registro";
         PreparedStatement ps = con.prepareStatement(sql);
         ResultSet rs = ps.executeQuery();
         
-        List<RegistroVO> lista = new ArrayList<>();
+        List<RegistroVO> lista1 = new ArrayList<>();
         while(rs.next()){
             RegistroVO registroVO = new RegistroVO();
             registroVO.setId_registro(rs.getInt("id_registro"));
@@ -116,16 +117,9 @@ public class RegistroDAO {
             registroVO.setId_usuario(rs.getInt("id_usuario"));
             registroVO.setId_puesto(rs.getInt("id_puesto"));
                
-            lista.add(registroVO);
+            lista1.add(registroVO);
         }
-        return lista;
+        return lista1;
     }
 
-    public Object consultar() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-    
-    
-    
-    
 }

@@ -154,18 +154,18 @@ public class Conexion {
         b.cerrarConexion();
     }
     */
-    
-    
+       
     //Se prueba la conexión
     public static void main(String[] args) throws SQLException { 
         Connection con = null;
         try {
             con = Conexion.getConexion();
-           TipoVehiculoDAO tipoVehiculoDAO = new TipoVehiculoDAO(con);
-           tipoVehiculoDAO.listar().forEach(System.out::println);
+            TipoVehiculoDAO tipoVehiculoDAO = new TipoVehiculoDAO(con);
+            tipoVehiculoDAO.listar().forEach(System.out::println);
             
-             RegistroDAO registroDAO = new RegistroDAO(con);
-             registroDAO.listar().forEach(System.out::println);
+            RegistroDAO registroDAO = new RegistroDAO(con);
+            registroDAO.listar_registro().forEach(System.out::println);
+            registroDAO.getClass();
              
             } finally {
             if (con != null) {

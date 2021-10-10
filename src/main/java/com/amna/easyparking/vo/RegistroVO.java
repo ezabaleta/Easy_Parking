@@ -127,7 +127,7 @@ public class RegistroVO {
         this.id_puesto = id_puesto;
     }
     
-    public boolean guardarRegistro() {
+   public boolean guardarRegistro() {
         Conexion conexion = new Conexion();
         String sentencia = "INSERT INTO REGISTRO(id_registro, placa, fecha_ingreso, id_tipo_vehiculo, permanencia,tarifa,subtotal,iva,total,fecha_salida,id_usuario,id_puesto)"
                 + " VALUES ('"+this.id_registro + "','" +this.placa+ "','" +this.fecha_ingreso+ "','" +this.id_tipo_vehiculo+ "','" +this.permanencia+ "','" +this.tarifa+ "','" +this.subtotal+ "','" +this.iva+"','" +this.total+ "','" +this.fecha_salida+ "','" +this.id_usuario+ "','" +this.id_puesto+ "'); ";    
