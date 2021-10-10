@@ -12,6 +12,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -20,6 +21,8 @@ public class Conexion {
     public static final String URL = "jdbc:mysql://localhost:3306/easyparking";
     public static final String USER = "root";
     public static final String CLAVE = "";
+    static Statement sentencia;
+    static ResultSet resultado;
     
      // Configuracion de la conexion a la base de datos 
     private String DB_driver = "";
@@ -154,6 +157,31 @@ public class Conexion {
         b.cerrarConexion();
     }
     */
+    
+    public static ArrayList<String> llenar_combo()
+    {
+      ArrayList<String> lista = new ArrayList<String>();
+      String q = "Select * from tipo_vehiculo";
+      try
+      {
+          resultado= sentencia.executeQuery(q);
+          System.out.println("ok");
+      }
+      catch (Exception e)
+      {
+          System.out.println("MAL");
+      }
+      try
+      {
+          while(resultado.next())
+          {
+              lista.add(resultado.getString("nombre"));
+          }
+      } catch (Exception e)
+                {
+      }
+      return lista;
+    }
        
     //Se prueba la conexión
     public static void main(String[] args) throws SQLException { 
