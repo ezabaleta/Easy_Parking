@@ -7,15 +7,13 @@ package com.amna.easyparking;
 
 import com.amna.easyparking.vo.PuestoVO;
 import com.amna.easyparking.vo.RegistroVO;
-import com.amna.easyparking.vo.TarifaVO;
 import com.amna.easyparking.vo.TipoVehiculoVO;
 import com.amna.easyparking.vo.UsuarioVO;
+import java.awt.Desktop;
+import java.io.File;
 import java.text.DateFormat;
-import java.text.FieldPosition;
-import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
 import java.util.Optional;
 import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
@@ -26,7 +24,7 @@ import javax.swing.JOptionPane;
  * @author Elsa Mellissa
  */
 public class FrmRegistro extends javax.swing.JDialog {
-    
+
     private UsuarioVO usuarioVO = null;
 
     private DateFormat formatoFecha = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -34,7 +32,7 @@ public class FrmRegistro extends javax.swing.JDialog {
     private Modelo modelo = new Modelo();
 
     int valorFraccion = 0;
-    
+
     private RegistroVO regActual = null;
 
     /**
@@ -52,8 +50,6 @@ public class FrmRegistro extends javax.swing.JDialog {
     public void setUsuario(UsuarioVO usuarioVO) {
         this.usuarioVO = usuarioVO;
     }
-    
-    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -299,10 +295,11 @@ public class FrmRegistro extends javax.swing.JDialog {
 
             btnRegEntrada.setEnabled(true);
             btnRegSalida.setEnabled(false);
-            
+
             regActual = new RegistroVO();
             regActual.setFecha_ingreso(new Date());
             regActual.setId_puesto(optPuesto.get().getIdPuesto());
+            regActual.setPlaza(optPuesto.get().getPlaza());
 
         } else { // el vehiculo va de salida
             regActual = optRegistro.get();
@@ -310,18 +307,18 @@ public class FrmRegistro extends javax.swing.JDialog {
             Date salida = new Date();
             Date ingreso = regActual.getFecha_ingreso();
             int permanencia = (int) ((salida.getTime() - ingreso.getTime()) / (1000 * 60)); // 1000 para pasar de milisegundos a segundos
+            if (permanencia == 0) {
+                permanencia = 1;
+            }
             // 60 para pasar de segundos a minutos                                                                               
             int fracciones = permanencia / 15;
             if (permanencia % 15 > 0) {
                 fracciones = fracciones + 1;
             }
-            if (fracciones == 0) {
-                fracciones = 1;
-            }
             int total = fracciones * valorFraccion;
             int subtotal = (int) (total / 1.19);
             int iva = total - subtotal;
-            
+
             for (int i = 0; i < cmbTipoVehiculo.getItemCount(); i++) {
                 TipoVehiculoVO tipoVehiculo = (TipoVehiculoVO) cmbTipoVehiculo.getItemAt(i);
                 if (tipoVehiculo.getIdTipoVehiculo() == regActual.getId_tipo_vehiculo()) {
@@ -339,7 +336,7 @@ public class FrmRegistro extends javax.swing.JDialog {
             txtTotal.setText(String.valueOf(total));
             btnRegEntrada.setEnabled(false);
             btnRegSalida.setEnabled(true);
-            
+
             regActual.setFecha_salida(salida);
             regActual.setTarifa(iva);
             regActual.setPermanencia(permanencia);
@@ -367,10 +364,19 @@ public class FrmRegistro extends javax.swing.JDialog {
 
         regActual.setPlaca(txtPlaca.getText().trim().toUpperCase());
         regActual.setId_tipo_vehiculo(((TipoVehiculoVO) cmbTipoVehiculo.getSelectedItem()).getIdTipoVehiculo());
+        regActual.setNombreTipoVehiculo(((TipoVehiculoVO) cmbTipoVehiculo.getSelectedItem()).getNombre());
         regActual.setId_usuario(usuarioVO.getIdUsuario());
         if (modelo.insertarRegistro(regActual)) {
             modelo.ocuparPuesto(regActual.getId_puesto());
-            JOptionPane.showMessageDialog(rootPane, "Ingreso registrado satisfactoriamente");
+            try {
+                File recibo = modelo.generarReciboEntrada(regActual);
+                Desktop.getDesktop().open(recibo);
+            } catch (Exception e) {
+                e.printStackTrace();
+                JOptionPane.showMessageDialog(rootPane, "Ocurrió un error generando el recibo de entrada");
+            } finally {
+                JOptionPane.showMessageDialog(rootPane, "Ingreso registrado satisfactoriamente");
+            }
             limpiar();
         } else {
             JOptionPane.showMessageDialog(rootPane, "Ocurrió un error registrando el ingreso");
@@ -382,17 +388,25 @@ public class FrmRegistro extends javax.swing.JDialog {
         if (txtPlaca.getText().isBlank()) {
             JOptionPane.showMessageDialog(rootPane, "Debe ingresar la placa");
             return;
-        }   
-        
+        }
+
         regActual.setId_usuario(usuarioVO.getIdUsuario());
-        System.out.println("Registrando fecha salida " + regActual.getFecha_salida().getTime());
+        regActual.setNombreTipoVehiculo(((TipoVehiculoVO) cmbTipoVehiculo.getSelectedItem()).getNombre());
         if (modelo.actualizarRegistro(regActual)) {
             modelo.liberarPuesto(regActual.getId_puesto());
-            JOptionPane.showMessageDialog(rootPane, "Salida registrada satisfactoriamente");
+            try {
+                File recibo = modelo.generarReciboSalida(regActual);
+                Desktop.getDesktop().open(recibo);
+            } catch (Exception e) {
+                e.printStackTrace();
+                JOptionPane.showMessageDialog(rootPane, "Ocurrió un error generando el recibo de salida");
+            } finally {
+                JOptionPane.showMessageDialog(rootPane, "Salida registrada satisfactoriamente");
+            }
             limpiar();
         } else {
             JOptionPane.showMessageDialog(rootPane, "Ocurrió un error registrando la salida");
-        }        
+        }
     }//GEN-LAST:event_btnRegSalidaActionPerformed
 
     private void limpiar() {

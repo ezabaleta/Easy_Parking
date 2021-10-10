@@ -17,19 +17,33 @@ import com.amna.easyparking.vo.RegistroVO;
 import com.amna.easyparking.vo.TarifaVO;
 import com.amna.easyparking.vo.TipoVehiculoVO;
 import com.amna.easyparking.vo.UsuarioVO;
+import java.awt.Desktop;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Collections;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperExportManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 
 /**
  *
  * @author Elsa Mellissa
  */
-public class Modelo {  
+public class Modelo {
 
     static boolean actualizarUsuario(RegistroVO registroVO) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
@@ -115,7 +129,7 @@ public class Modelo {
         }
         return false;
     }
-    
+
     public boolean insertarRegistro(RegistroVO registroVO) {
         Connection con = null;
         try {
@@ -131,6 +145,7 @@ public class Modelo {
         }
         return false;
     }
+
     public Optional<RegistroVO> consultarRegistro(String placa) {
         Connection con = null;
         try {
@@ -143,12 +158,10 @@ public class Modelo {
         } finally {
             Conexion.close(con);
         }
-        return Optional.empty();       
+        return Optional.empty();
     }
-    
-    
-    
-    public boolean actualizarRegistro (RegistroVO registroVO) {
+
+    public boolean actualizarRegistro(RegistroVO registroVO) {
         Connection con = null;
         try {
             con = Conexion.getConexion(); //Se establece la conexión
@@ -163,7 +176,7 @@ public class Modelo {
         }
         return false;
     }
-    
+
     public boolean insertarCierre(CierreVO cierreVO) {
         Connection con = null;
         try {
@@ -179,7 +192,7 @@ public class Modelo {
         }
         return false;
     }
-    
+
     public List<CierreVO> listarCierre() {
         Connection con = null;
         try {
@@ -194,8 +207,8 @@ public class Modelo {
         }
         return Collections.EMPTY_LIST;//devuelve una lista vacía para evitar nullpointer exeption
     }
-    
-    public boolean eliminarCierre (CierreVO cierreVO) {
+
+    public boolean eliminarCierre(CierreVO cierreVO) {
         Connection con = null;
         try {
             con = Conexion.getConexion(); //Se establece la conexión
@@ -212,7 +225,7 @@ public class Modelo {
         }
         return false;
     }
-    
+
     public List<TipoVehiculoVO> listarTipoVehiculo() {
         Connection con = null;
         try {
@@ -226,8 +239,8 @@ public class Modelo {
             Conexion.close(con);
         }
         return Collections.EMPTY_LIST;//devuelve una lista vacía para evitar nullpointer exeption
-    }    
-    
+    }
+
     public Optional<TarifaVO> consultarTarifa() {
         Connection con = null;
         try {
@@ -240,10 +253,9 @@ public class Modelo {
         } finally {
             Conexion.close(con);
         }
-        return Optional.empty();       
-    }    
-    
-    
+        return Optional.empty();
+    }
+
     public Optional<PuestoVO> consultarPuestoLibre() {
         Connection con = null;
         try {
@@ -256,8 +268,8 @@ public class Modelo {
         } finally {
             Conexion.close(con);
         }
-        return Optional.empty();       
-    }   
+        return Optional.empty();
+    }
 
     public boolean ocuparPuesto(int idPuesto) {
         Connection con = null;
@@ -277,7 +289,7 @@ public class Modelo {
         }
         return false;
     }
-    
+
     public boolean liberarPuesto(int idPuesto) {
         Connection con = null;
         try {
@@ -295,5 +307,47 @@ public class Modelo {
             Conexion.close(con);
         }
         return false;
-    }    
+    }
+
+    public File generarReciboEntrada(RegistroVO registroVO) throws JRException, IOException {
+        // InputStream is = getClass().getResourceAsStream("/resources/recibo_entrada.jrxml");
+        InputStream is = getClass().getResourceAsStream("/recibo_entrada.jrxml");
+        JasperReport report = JasperCompileManager.compileReport(is);
+
+        JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(List.of(registroVO));
+        JasperPrint print = JasperFillManager.fillReport(report, new HashMap(), dataSource);
+
+        File file = File.createTempFile("registro_entrada_" + registroVO.getId_registro(), ".pdf");
+        JasperExportManager.exportReportToPdfFile(print, file.getAbsolutePath());
+        return file;
+    }
+
+    public File generarReciboSalida(RegistroVO registroVO) throws JRException, IOException {
+        // InputStream is = getClass().getResourceAsStream("/resources/recibo_entrada.jrxml");
+        InputStream is = getClass().getResourceAsStream("/recibo_salida.jrxml");
+        JasperReport report = JasperCompileManager.compileReport(is);
+
+        JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(List.of(registroVO));
+        JasperPrint print = JasperFillManager.fillReport(report, new HashMap(), dataSource);
+
+        File file = File.createTempFile("registro_salida_" + registroVO.getId_registro(), ".pdf");
+        JasperExportManager.exportReportToPdfFile(print, file.getAbsolutePath());
+        return file;
+    }
+
+    public static void main(String[] args) {
+        RegistroVO reg = new RegistroVO();
+        reg.setId_registro(101);
+        reg.setFecha_ingreso(new Date());
+        reg.setPlaca("FRP828");
+        reg.setPlaza("FRP828--");
+        Modelo modelo = new Modelo();
+        try {
+            File file = modelo.generarReciboEntrada(reg);
+            System.out.println("OK " + file.getAbsolutePath());
+            Desktop.getDesktop().open(file);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }

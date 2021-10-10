@@ -25,6 +25,7 @@ public class RegistroVO {
     private Date fecha_salida;
     private int id_usuario;
     private int id_puesto;
+    private String nombreTipoVehiculo;
 
     public int getId_registro() {
         return id_registro;
@@ -130,6 +131,14 @@ public class RegistroVO {
 
     public void setPlaza(String plaza) {
         this.plaza = plaza;
+    }
+
+    public String getNombreTipoVehiculo() {
+        return nombreTipoVehiculo;
+    }
+
+    public void setNombreTipoVehiculo(String nombreTipoVehiculo) {
+        this.nombreTipoVehiculo = nombreTipoVehiculo;
     }
     
    public boolean guardarRegistro() {
