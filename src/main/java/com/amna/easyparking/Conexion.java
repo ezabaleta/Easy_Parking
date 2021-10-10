@@ -152,19 +152,14 @@ public class Conexion {
         }
     }
 
-   /* public static void main(String[] args) {
-        Conexion b = new Conexion();
-        b.cerrarConexion();
-    }
-    */
-    
+      
     public static ArrayList<String> llenar_combo()
     {
       ArrayList<String> lista = new ArrayList<String>();
-      String q = "Select * from tipo_vehiculo";
+      String s = "Select * from tipo_vehiculo";
       try
       {
-          resultado= sentencia.executeQuery(q);
+          resultado= sentencia.executeQuery(s);
           System.out.println("ok");
       }
       catch (Exception e)
@@ -175,7 +170,7 @@ public class Conexion {
       {
           while(resultado.next())
           {
-              lista.add(resultado.getString("nombre"));
+              lista.add(resultado.getString("id_tipo_vehiculo"));
           }
       } catch (Exception e)
                 {
