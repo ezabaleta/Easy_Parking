@@ -6,12 +6,7 @@
 package com.amna.easyparking.vo;
 
 import com.amna.easyparking.Conexion;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.List;
-import java.sql.*;
+import java.util.Date;
 
 
 /**
@@ -20,14 +15,14 @@ import java.sql.*;
 public class RegistroVO {
     private int id_registro;
     private String placa;
-    private String fecha_ingreso;
+    private Date fecha_ingreso;
     private int id_tipo_vehiculo;
     private int permanencia;
     private int tarifa;
     private int subtotal;
     private int iva;
     private int total;
-    private String fecha_salida;
+    private Date fecha_salida;
     private int id_usuario;
     private int id_puesto;
 
@@ -47,11 +42,11 @@ public class RegistroVO {
         this.placa = placa;
     }
 
-    public String getFecha_ingreso() {
+    public Date getFecha_ingreso() {
         return fecha_ingreso;
     }
 
-    public void setFecha_ingreso(String fecha_ingreso) {
+    public void setFecha_ingreso(Date fecha_ingreso) {
         this.fecha_ingreso = fecha_ingreso;
     }
 
@@ -103,11 +98,11 @@ public class RegistroVO {
         this.total = total;
     }
 
-    public String getFecha_salida() {
+    public Date getFecha_salida() {
         return fecha_salida;
     }
 
-    public void setFecha_salida(String fecha_salida) {
+    public void setFecha_salida(Date fecha_salida) {
         this.fecha_salida = fecha_salida;
     }
 
@@ -125,6 +120,16 @@ public class RegistroVO {
 
     public void setId_puesto(int id_puesto) {
         this.id_puesto = id_puesto;
+    }
+    
+    private String plaza;
+
+    public String getPlaza() {
+        return plaza;
+    }
+
+    public void setPlaza(String plaza) {
+        this.plaza = plaza;
     }
     
    public boolean guardarRegistro() {

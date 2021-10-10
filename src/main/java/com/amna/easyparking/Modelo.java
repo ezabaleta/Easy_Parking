@@ -6,10 +6,16 @@
 package com.amna.easyparking;
 
 import com.amna.easyparking.dao.CierreDAO;
+import com.amna.easyparking.dao.PuestoDAO;
 import com.amna.easyparking.dao.RegistroDAO;
+import com.amna.easyparking.dao.TarifaDAO;
+import com.amna.easyparking.dao.TipoVehiculoDAO;
 import com.amna.easyparking.dao.UsuarioDAO;
 import com.amna.easyparking.vo.CierreVO;
+import com.amna.easyparking.vo.PuestoVO;
 import com.amna.easyparking.vo.RegistroVO;
+import com.amna.easyparking.vo.TarifaVO;
+import com.amna.easyparking.vo.TipoVehiculoVO;
 import com.amna.easyparking.vo.UsuarioVO;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -110,12 +116,12 @@ public class Modelo {
         return false;
     }
     
-    public boolean insertarRegistro(UsuarioVO usuarioVO) {
+    public boolean insertarRegistro(RegistroVO registroVO) {
         Connection con = null;
         try {
             con = Conexion.getConexion(); //Se establece la conexión
-            UsuarioDAO usuarioDAO = new UsuarioDAO(con); //instancio el DAO
-            usuarioDAO.insertar(usuarioVO);//actualizo el usuario
+            RegistroDAO registroDAO = new RegistroDAO(con); //instancio el DAO
+            registroDAO.insertar(registroVO);//actualizo el usuario
             return true;
 
         } catch (SQLException ex) {  //catch atrapa la exepción
@@ -207,4 +213,87 @@ public class Modelo {
         return false;
     }
     
+    public List<TipoVehiculoVO> listarTipoVehiculo() {
+        Connection con = null;
+        try {
+            con = Conexion.getConexion(); //Se establece la conexión
+            TipoVehiculoDAO tipoVehiculoDAO = new TipoVehiculoDAO(con); //instancio el DAO
+            return tipoVehiculoDAO.listar();
+
+        } catch (SQLException ex) {  //catch atrapa la exepción
+            Logger.getLogger(Modelo.class.getName()).log(Level.SEVERE, null, ex);//imprime la salida en consola
+        } finally {
+            Conexion.close(con);
+        }
+        return Collections.EMPTY_LIST;//devuelve una lista vacía para evitar nullpointer exeption
+    }    
+    
+    public Optional<TarifaVO> consultarTarifa() {
+        Connection con = null;
+        try {
+            con = Conexion.getConexion(); //Se establece la conexión
+            TarifaDAO tarifaDAO = new TarifaDAO(con); //instancio el DAO
+            return tarifaDAO.consultar();//Consulto el registro
+
+        } catch (SQLException ex) {  //catch atrapa la exepción
+            Logger.getLogger(Modelo.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            Conexion.close(con);
+        }
+        return Optional.empty();       
+    }    
+    
+    
+    public Optional<PuestoVO> consultarPuestoLibre() {
+        Connection con = null;
+        try {
+            con = Conexion.getConexion(); //Se establece la conexión
+            PuestoDAO puestoDAO = new PuestoDAO(con); //instancio el DAO
+            return puestoDAO.consultarLibre();//Consulto el registro
+
+        } catch (SQLException ex) {  //catch atrapa la exepción
+            Logger.getLogger(Modelo.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            Conexion.close(con);
+        }
+        return Optional.empty();       
+    }   
+
+    public boolean ocuparPuesto(int idPuesto) {
+        Connection con = null;
+        try {
+            con = Conexion.getConexion(); //Se establece la conexión
+            PuestoDAO puestoDAO = new PuestoDAO(con); //instancio el DAO
+            PuestoVO puestoVO = new PuestoVO();
+            puestoVO.setIdPuesto(idPuesto);
+            puestoVO.setEstado("OCUPADO");
+            puestoDAO.actualizarEstado(puestoVO);//actualizo el usuario
+            return true;// se agrega para trbajar con el front
+
+        } catch (SQLException ex) {  //catch atrapa la exepción
+            Logger.getLogger(Modelo.class.getName()).log(Level.SEVERE, null, ex);//imprime la salida en consola
+        } finally {
+            Conexion.close(con);
+        }
+        return false;
+    }
+    
+    public boolean liberarPuesto(int idPuesto) {
+        Connection con = null;
+        try {
+            con = Conexion.getConexion(); //Se establece la conexión
+            PuestoDAO puestoDAO = new PuestoDAO(con); //instancio el DAO
+            PuestoVO puestoVO = new PuestoVO();
+            puestoVO.setIdPuesto(idPuesto);
+            puestoVO.setEstado("LIBRE");
+            puestoDAO.actualizarEstado(puestoVO);//actualizo el usuario
+            return true;// se agrega para trbajar con el front
+
+        } catch (SQLException ex) {  //catch atrapa la exepción
+            Logger.getLogger(Modelo.class.getName()).log(Level.SEVERE, null, ex);//imprime la salida en consola
+        } finally {
+            Conexion.close(con);
+        }
+        return false;
+    }    
 }

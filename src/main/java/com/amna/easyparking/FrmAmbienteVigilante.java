@@ -106,8 +106,10 @@ public class FrmAmbienteVigilante extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCambiarContrasenaActionPerformed
 
     private void btnEntradaSalidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEntradaSalidaActionPerformed
-        RegistrodeEntrada frm = new RegistrodeEntrada(usuarioVO);
-            frm.setVisible(true);
+        // RegistrodeEntrada frm = new RegistrodeEntrada(usuarioVO);
+        FrmRegistro frm = new FrmRegistro(this, true);
+        frm.setUsuario(usuarioVO);
+        frm.setVisible(true);
     }//GEN-LAST:event_btnEntradaSalidaActionPerformed
 
     /**

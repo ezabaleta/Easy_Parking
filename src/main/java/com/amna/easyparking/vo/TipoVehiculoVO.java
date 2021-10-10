@@ -32,7 +32,7 @@ public class TipoVehiculoVO {
 
     @Override
     public String toString() {                          //consultar los datos de Tipo vehículo
-        return idTipoVehiculo + ":" + nombre;
+        return nombre;
     }
     
     

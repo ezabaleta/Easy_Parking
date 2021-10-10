@@ -28,6 +28,8 @@ public class RegistrodeEntrada extends javax.swing.JFrame {
  
  /*String hora, minutos,segundos;
  Thread hilo;*/
+    
+    private Modelo modelo = new Modelo();
  
   Conexion con1 = new Conexion();
   Connection cn = con1.getConexion();
@@ -45,6 +47,9 @@ public class RegistrodeEntrada extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
         jCombo_Vehiculos.removeAllItems();
+        
+        
+        
         ArrayList<String> lista = new ArrayList<String>();
         lista = Conexion.llenar_combo();
         
@@ -245,10 +250,10 @@ public class RegistrodeEntrada extends javax.swing.JFrame {
        try
        {
         PreparedStatement ps = cn.prepareStatement("Insert into registro (id_registro, placa, fecha_ingreso, id_tipo_vehiculo, permanencia,tarifa,subtotal,iva,total,fecha_salida,id_usuario,id_puesto) values(?,?,?,?,'','','','','','','','')");
-        ps.setInt(1, (int) random()); 
+        // ps.setInt(1, (int) random()); c
         ps.setString(2,jTextPlaca.getText()); 
         ps.setString(3, ((JTextField)jDTFecha.getDateEditor().getUiComponent()).getText());
-        ps.setInt(4, (int) jComboTipo.getSelectedItem());
+        ps.setInt(4, Integer.parseInt(jComboTipo.getSelectedItem().toString()));
        /* ps.setInt(5, registroVO.getPermanencia());
         ps.setInt(6, registroVO.getTarifa());
         ps.setInt(7, registroVO.getSubtotal());
@@ -263,7 +268,8 @@ public class RegistrodeEntrada extends javax.swing.JFrame {
        }
        catch (Exception ex)
        {
-         JOptionPane.showMessageDialog(null, "Error al Ingresar los datos" + ex.getMessage());
+           ex.printStackTrace();
+         JOptionPane.showMessageDialog(null, "Error al Ingresar los datos " + ex.getMessage());
        }
         
     }//GEN-LAST:event_jButtonRegistrarActionPerformed
@@ -331,7 +337,7 @@ public class RegistrodeEntrada extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> {
-            // new RegistrodeEntrada().setVisible(true);
+            new RegistrodeEntrada().setVisible(true);
         });
     }
 
