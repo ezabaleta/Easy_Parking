@@ -5,17 +5,23 @@
  */
 package com.amna.easyparking;
 
+import com.amna.easyparking.vo.UsuarioVO;
+import java.util.Optional;
+
 /**
  *
  * @author Elsa Mellissa
  */
 public class IncioSesionForm extends javax.swing.JFrame {
 
+    private Modelo modelo = new Modelo();
+
     /**
      * Creates new form IncioSesionForm
      */
     public IncioSesionForm() {
         initComponents();
+        this.setLocationRelativeTo(null);
     }
 
     /**
@@ -35,6 +41,7 @@ public class IncioSesionForm extends javax.swing.JFrame {
         txtContrasena = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Easy Parking");
 
         txtCuenta.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -112,10 +119,43 @@ public class IncioSesionForm extends javax.swing.JFrame {
 
     private void txtCuentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCuentaActionPerformed
         // TODO add your handling code here:
+
     }//GEN-LAST:event_txtCuentaActionPerformed
 
     private void btnIniciarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIniciarSesionActionPerformed
-        // TODO add your handling code here:
+        // Validar que el usuario halla escrito la cuenta y la contraseña
+        // Consultar el usuario en la BD con la cuenta 
+        // Comparar que la cuenta y contraseña coincidan con la BD
+
+        Optional<UsuarioVO> optUsuario = modelo.consultarUsuario(txtCuenta.getText());
+        if (optUsuario.isEmpty()) {
+            //Usuario o contraseña no validos
+            System.out.println("Usuario no existe");
+            return;
+
+        }
+        if (!optUsuario.get().getContrasena().equals(txtContrasena.getText())) {
+            //Usuario o contraseña no validos
+            System.out.println("Contraseña no valida");
+            return;
+        }
+
+        if (optUsuario.get().getTipo().equalsIgnoreCase("ADMINISTRADOR")) {
+            //Abrir ambiente de administrador
+            System.out.println("Abriendo ambiente del administrador");
+            FrmAmbienteAdministrador frm = new FrmAmbienteAdministrador(optUsuario.get());
+            frm.setVisible(true);
+            this.dispose();
+            
+            
+        } else {
+            //Abrir ambiente de Vigilante
+            System.out.println("Abriendo ambiente del vigilante");
+            FrmAmbienteVigilante frm = new FrmAmbienteVigilante(optUsuario.get());
+            frm.setVisible(true);
+            this.dispose();
+        }
+
     }//GEN-LAST:event_btnIniciarSesionActionPerformed
 
     private void txtContrasenaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtContrasenaActionPerformed

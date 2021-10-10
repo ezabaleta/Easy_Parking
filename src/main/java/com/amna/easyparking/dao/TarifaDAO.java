@@ -12,6 +12,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 /**
  *
@@ -25,20 +26,18 @@ public class TarifaDAO {
         this.con = con;
     }
     
-    public List<TarifaVO> listar () throws SQLException {
+    public Optional<TarifaVO> consultar () throws SQLException {
         String sql = "Select * from tarifa";
         PreparedStatement ps = con.prepareStatement(sql);
         ResultSet rs =ps.executeQuery();
         
-        List<TarifaVO> lista = new ArrayList<>();
-        while (rs.next()){
+        if (rs.next()){
             TarifaVO tarifaVO = new TarifaVO();
             tarifaVO.setIdTarifa (rs.getInt("id_tarifa"));
             tarifaVO.setValorFraccion(rs.getInt("valor_fraccion"));
-            lista.add (tarifaVO);   
+            return Optional.of(tarifaVO);   
         }
-        return lista;
-        
+        return Optional.empty();
     }
     
 }
