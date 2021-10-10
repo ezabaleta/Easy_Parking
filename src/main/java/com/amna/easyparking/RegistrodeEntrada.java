@@ -19,6 +19,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
+import java.util.ArrayList;
 
 /**
  *
@@ -275,8 +276,6 @@ public class RegistrodeEntrada extends javax.swing.JFrame {
     private void jButton_reciboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_reciboActionPerformed
            placa = jTextPlaca.getText(); 
            fecha = fecha();
-           
-           
        //  hora1 = JlabelHora.getText(); 
            tipo = (String) jComboTipo.getSelectedItem();
            
