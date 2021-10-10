@@ -8,6 +8,7 @@ package com.amna.easyparking;
 import com.amna.easyparking.vo.RegistroVO;
 import com.amna.easyparking.vo.UsuarioVO;
 import com.toedter.calendar.JCalendar;
+import static java.lang.Math.random;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -17,6 +18,7 @@ import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 
 /**
  *
@@ -34,6 +36,7 @@ public class RegistrodeEntrada extends javax.swing.JFrame {
   
     private UsuarioVO usuarioVO = null;
     private boolean modificado;
+    private Object registroVO;
     /**
      * Creates new form RegistrodeEntrada
      */
@@ -41,6 +44,16 @@ public class RegistrodeEntrada extends javax.swing.JFrame {
         this.usuarioVO = usuarioVO;//el valor que se recibe en el parámetro del constructor lo asigna a la propiedad private UsuarioVO
         initComponents();
         this.setLocationRelativeTo(null);
+        jCombo_Vehiculos.removeAllItems();
+        ArrayList<String> lista = new ArrayList<String>();
+        lista = Conexion.llenar_combo();
+        
+        for (int i =0; i<lista.size(); i++)
+        {
+            jCombo_Vehiculos.addItem(lista.get(i));
+        }
+        
+        
     
       //  JlabelFecha.setText(fecha());
           jDTFecha.setCalendar(Calendario);
@@ -69,7 +82,7 @@ public class RegistrodeEntrada extends javax.swing.JFrame {
     public static String fecha()
     {
         Date fecha1 = new Date();
-        SimpleDateFormat formatofecha = new SimpleDateFormat("YYYY/MM/dd HH:mm:ss");
+        SimpleDateFormat formatofecha = new SimpleDateFormat("YYYY-MM-DD hh:mm:ss");
         return formatofecha.format(fecha1);
     }
             
@@ -95,6 +108,7 @@ public class RegistrodeEntrada extends javax.swing.JFrame {
         jButtonRegistrar = new javax.swing.JButton();
         jButton_recibo = new javax.swing.JButton();
         jDTFecha = new com.toedter.calendar.JDateChooser();
+        jCombo_Vehiculos = new javax.swing.JComboBox<>();
         jPanel2 = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -117,6 +131,11 @@ public class RegistrodeEntrada extends javax.swing.JFrame {
                 jComboTipoMouseClicked(evt);
             }
         });
+        jComboTipo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboTipoActionPerformed(evt);
+            }
+        });
 
         jButtonRegistrar.setText("Registrar");
         jButtonRegistrar.addActionListener(new java.awt.event.ActionListener() {
@@ -133,7 +152,14 @@ public class RegistrodeEntrada extends javax.swing.JFrame {
             }
         });
 
-        jDTFecha.setDateFormatString("yyyy/MM/dd HH:mm:ss");
+        jDTFecha.setDateFormatString("YYYY-MM-DD HH:mm:ss");
+
+        jCombo_Vehiculos.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jCombo_Vehiculos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCombo_VehiculosActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -152,13 +178,13 @@ public class RegistrodeEntrada extends javax.swing.JFrame {
                         .addContainerGap()
                         .addComponent(jButtonRegistrar, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jButton_recibo)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(jTextPlaca)
-                        .addComponent(jComboTipo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jDTFecha, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addContainerGap(28, Short.MAX_VALUE))
+                    .addComponent(jTextPlaca)
+                    .addComponent(jComboTipo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jDTFecha, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jCombo_Vehiculos, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(26, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -175,7 +201,9 @@ public class RegistrodeEntrada extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(jComboTipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 53, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jCombo_Vehiculos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonRegistrar, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton_recibo, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -216,27 +244,26 @@ public class RegistrodeEntrada extends javax.swing.JFrame {
           
        try
        {
-        PreparedStatement ps = cn.prepareStatement("Insert into registro (placa, fecha_ingreso,id_tipo_vehiculo) values(?,?,?)");
-       
-        ps.setString(1,jTextPlaca.getText()); 
-        ps.setString(2, jDTFecha.getDateFormatString());
-        ps.setString(3, (String) jComboTipo.getSelectedItem());
-        
-      /* ps.setInt(5, registroVO.getPermanencia());
+        PreparedStatement ps = cn.prepareStatement("Insert into registro (id_registro, placa, fecha_ingreso, id_tipo_vehiculo, permanencia,tarifa,subtotal,iva,total,fecha_salida,id_usuario,id_puesto) values(?,?,?,?,'','','','','','','','')");
+        ps.setInt(1, (int) random()); 
+        ps.setString(2,jTextPlaca.getText()); 
+        ps.setString(3, ((JTextField)jDTFecha.getDateEditor().getUiComponent()).getText());
+        ps.setInt(4, (int) jComboTipo.getSelectedItem());
+       /* ps.setInt(5, registroVO.getPermanencia());
         ps.setInt(6, registroVO.getTarifa());
         ps.setInt(7, registroVO.getSubtotal());
         ps.setInt(8, registroVO.getIva());
         ps.setInt(9, registroVO.getTotal());
         ps.setString(10, registroVO.getFecha_salida());
         ps.setInt(11, registroVO.getId_usuario());
-        ps.setInt(12, registroVO.getId_puesto());   */     
+        ps.setInt(12, registroVO.getId_puesto());   */ 
        
-        ps.executeUpdate();
+        ps.execute();
         JOptionPane.showMessageDialog(null, "Datos Guardados");
        }
-       catch (SQLException ex)
+       catch (Exception ex)
        {
-           Logger.getLogger(RegistrodeEntrada.class.getName()).log(Level.SEVERE,null,ex);
+         JOptionPane.showMessageDialog(null, "Error al Ingresar los datos" + ex.getMessage());
        }
         
     }//GEN-LAST:event_jButtonRegistrarActionPerformed
@@ -247,7 +274,6 @@ public class RegistrodeEntrada extends javax.swing.JFrame {
 
     private void jButton_reciboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_reciboActionPerformed
            placa = jTextPlaca.getText(); 
-          // fecha = Calendar.setDate(Calendario.getTime());
            fecha = fecha();
            
            
@@ -262,6 +288,19 @@ public class RegistrodeEntrada extends javax.swing.JFrame {
     private void jComboTipoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jComboTipoMouseClicked
         // TODO add your handling code here:
     }//GEN-LAST:event_jComboTipoMouseClicked
+
+    private void jComboTipoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboTipoActionPerformed
+        // TODO add your handling code here:
+       
+        
+    }//GEN-LAST:event_jComboTipoActionPerformed
+
+    private void jCombo_VehiculosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCombo_VehiculosActionPerformed
+        // TODO add your handling code here:
+        
+        
+        
+    }//GEN-LAST:event_jCombo_VehiculosActionPerformed
 
     /**
      * @param args the command line arguments
@@ -300,6 +339,7 @@ public class RegistrodeEntrada extends javax.swing.JFrame {
     private javax.swing.JButton jButtonRegistrar;
     private javax.swing.JButton jButton_recibo;
     private javax.swing.JComboBox<String> jComboTipo;
+    private javax.swing.JComboBox<String> jCombo_Vehiculos;
     public com.toedter.calendar.JDateChooser jDTFecha;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
